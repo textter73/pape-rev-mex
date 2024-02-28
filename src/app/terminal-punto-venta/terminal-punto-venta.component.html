@@ -1,0 +1,409 @@
+<div fxLayout="row" fxLayout.lt-sm="column" class="height-100">
+
+    <div fxFlex="20" class="full-width ">
+        <div fxLayout="column" class="h-45-vh card-box">
+                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="center start" *ngIf="infoPreview['itemName']">
+                    <img 
+                        [src]="infoPreview['imagen']" 
+                        style="width: 220px; height: 220px;">
+                </div>
+                <div fxLayoutAlign="start start" style="margin: 0px; padding: 0px;" *ngIf="infoPreview['itemName']">
+                    <span class="item-name-text-principal cp">{{ infoPreview['itemName'] }}</span>
+                    <span>| {{ infoPreview['branch'] }}</span>
+                </div>
+                <div fxLayoutAlign="start start" style="margin: 0px; padding: 0px;" *ngIf="infoPreview['itemName']">
+                    <div class="item-name-text-principal">Costo: {{ infoPreview['saleAmount'] | currency: 'MXN' }}</div>
+                </div>
+                <div fxLayoutAlign="start start" style="margin: 0px; padding: 0px;" *ngIf="infoPreview['itemName']">
+                    <span class="font-bold-1000 cp sin-existencia"
+                        *ngIf="+infoPreview['quantityAvailable'] <= 0"> Disponible: {{
+                            infoPreview['quantityAvailable'] }}</span>
+                    <span class="font-bold-1000 cp poca-existencia"
+                        *ngIf="+infoPreview['quantityAvailable'] >= 1 && +infoPreview['quantityAvailable'] <= 5">
+                         Disponible: {{ infoPreview['quantityAvailable'] }}</span>
+                    <span class="font-bold-1000 cp "
+                        *ngIf="infoPreview['quantityAvailable'] > 5">  Disponible: {{
+                            infoPreview['quantityAvailable'] }}</span>
+                </div>
+            
+        </div>
+
+        
+        <div fxLayout="column" class="card-box-fondo h-40-vh">
+            <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="center start">
+                <p></p>
+            </div>
+        </div>
+    </div>
+
+    <!--seccion de busqueda de articulos-->
+    <div fxFlex="60" class="full-width m-8 card-box">
+        <mat-tab-group>
+
+            <mat-tab>
+
+                <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon">account_balance</mat-icon>
+                    Vender
+                </ng-template>
+
+                <div fxLayout="row" *ngIf="existeCaja">
+                    <div fxFlex="100">
+                        <mat-form-field class="search-input full-width" appearance="outline">
+                            <mat-label>Buscar artículo</mat-label>
+                            <input type="text" placeholder="Buscar artículo" aria-label="Number" matInput
+                                [formControl]="myControl" [matAutocomplete]="auto">
+                            <button *ngIf="value" matSuffix mat-icon-button aria-label="Clear"
+                                (click)="value=''">
+                                <mat-icon>close</mat-icon>
+                            </button>
+                            <mat-autocomplete autoActiveFirstOption #auto="matAutocomplete"
+                                (optionSelected)="productSelected($event)">
+                                <mat-option *ngFor="let option of filteredOptions | async" [value]="option"
+                                    style="height: auto;" fxFlexAlign="center center">
+            
+                                    <div fxLayout="row" fxFlexAlign="center center" class="full-width">
+                                        <div fxFlex="90" fxFlexAlign="center center" class="full-width">
+                                            <span
+                                                class="item-name-text-principal cp">{{option['itemName'].toUpperCase()}}</span>
+                                            <span> | {{option['branch']}}</span>
+            
+                                            <span class="font-bold-1000 cp sin-existencia"
+                                                *ngIf="+option['quantityAvailable'] <= 0"> | Disponible: {{
+                                                option['quantityAvailable'] }}</span>
+                                            <span class="font-bold-1000 cp poca-existencia"
+                                                *ngIf="+option['quantityAvailable'] >= 1 && +option['quantityAvailable'] <= 5">
+                                                | Disponible: {{ option['quantityAvailable'] }}</span>
+                                            <span class="font-bold-1000 cp "
+                                                *ngIf="option['quantityAvailable'] > 5"> | Disponible: {{
+                                                option['quantityAvailable'] }}</span>
+                                        </div>
+                                        <div fxFlex="10" fxFlexAlign="end end" class="full-width">
+                                            <span class="item-name-text-principal cp"> {{ option['saleAmount'] |
+                                                currency: 'MXN' }}</span>
+                                        </div>
+                                    </div>
+            
+                                </mat-option>
+                            </mat-autocomplete>
+                        </mat-form-field>
+                    </div>
+                </div>
+                
+                <div class="h-60-vh" *ngIf="existeCaja">
+                    <div *ngFor="let item of carShop; index as i">
+                        <div class="row-sales full-width" >
+                            <div fxFlex="88" fxLayoutAlign="start end">
+                                <div fxLayout="column" class="full-width">
+                                    <div fxLayout="row" class="full-width">
+                                        <div fxFlex="85" fxHide fxShow.gt-sm fxLayoutAlign="start center" class="full-width">
+                                            <span class="item-name-text-principal cp"> {{ item.itemName.toUpperCase() }} </span>
+                                            <span> | {{ item.branch }}</span>
+                                        </div>
+                                        <div fxFlex="15" fxHide fxShow.gt-sm fxLayoutAlign="end center">
+                                            <span class="item-name-text-principal cp">{{ item.subtotal | currency: 'MXN' }}</span>
+                                        </div>
+                                    </div>
+                                    <div fxLayout="row" class="full-width" style="height: 100%;">
+                                        <div fxFlex="50" fxHide fxShow.gt-sm fxLayoutAlign="start center">
+                                            <span>Cantidad: {{ item.quantity }}</span>
+                                        </div>
+                                        <div fxFlex="50" fxHide fxShow.gt-sm fxLayoutAlign="end center">
+                                            <div>Costo: {{ item.saleAmount | currency: 'MXN' }}</div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div fxFlex="6" fxLayoutAlign="end center" class="full-width">
+                                <div fxLayout="row" class="full-width" style="height: 100%;">
+                                    <mat-icon class="icon-add-sales" (click)="addItem(i)">add_circle</mat-icon>
+                                </div>
+                            </div>
+                            <div fxFlex="6" fxLayoutAlign="end center" class="full-width">
+                                <div fxLayout="row" class="full-width" style="height: 100%;">
+                                    <mat-icon class="icon-removed-sales" (click)="removedItem(i)">remove_circle</mat-icon>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <hr>
+                <div fxLayout="row" *ngIf="existeCaja">
+                    <div fxFlex="10" class="tae p-8" fxHide fxShow.gt-sm>
+                        <div class="example-button-row m-8" [hidden]="!existeCaja">
+                            <button mat-raised-button color="primary" (click)="openBox(false)">
+                                <mat-icon>exit_to_app</mat-icon>Cerrar caja</button>
+                        </div>
+                    </div>
+
+                    <div fxFlex="90" class="tae p-8" fxHide fxShow.gt-sm>
+                        <div class="h30 mt-8"><b>{{totalAmountCar | currency: 'MXN'}}</b></div>
+                    </div>
+                </div>
+
+                <div fxFlex="100" *ngIf="!existeCaja" class="full-width" fxFlexAlign="center center">
+                    <div class="example-button-row m-8" class="full-width">
+                        <div class="example-button-row m-16 tac">
+                            <button mat-raised-button color="primary" (click)="openBox(true)" class="p-16">
+                                <mat-icon>monetization_on</mat-icon> Abrir caja</button>
+                        </div>
+                    </div>
+                </div>
+
+            </mat-tab>
+
+            <mat-tab >
+
+                <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon" 
+                        matBadgeColor="accent">assignment</mat-icon>
+                    Listado de ventas
+                </ng-template>
+
+                <div fxLayout="row" fxLayout.lt-sm="column" fxLayoutAlign="center start" class="full-width"
+                     > <!--*ngIf="listaVentasHoy.length"-->
+                    <div fxFlex="80" fxflex.md="100" fxLayout="column" fxLayoutAlign="center start"
+                        class="card full-width" >
+
+                        <div fxLayout="row" fxLayoutAlign="center center" class="full-width">
+                            <div fxFlex="100" fxLayout="row" fxLayoutAlign="center center">
+                                <div class="title-page"> <mat-icon class="title-icon">storage</mat-icon> Listado de
+                                    ventas</div>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxLayoutAlign="end end" class="full-width">
+                            <div fxFlex="100" fxLayout="row" fxLayoutAlign="end end">
+                                <button mat-raised-button color="accent" [disabled]="listaVentasHoy.length === 0"
+                                    (click)="exportarExcel()">
+                                    <mat-icon>get_app</mat-icon> Exportar a excel
+                                </button>
+                            </div>
+                        </div>
+
+                        <div fxLayout="row" fxFlex="100" class="full-width" style=" max-height: 40vh !important; overflow: auto; ">
+                            <div fxFlex="100" class="tac" *ngIf="listaVentasHoy.length > 0" >
+                                <table mat-table [dataSource]="dataSourceVentasHoy" class="tac" >
+
+                                    <ng-container matColumnDef="number">
+                                        <th mat-header-cell *matHeaderCellDef class="text-header-table">No.</th>
+                                        <td mat-cell *matCellDef="let element; let i = index;">{{i + 1}}</td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="items" class="tac">
+                                        <th mat-header-cell *matHeaderCellDef class="text-header-table tac">
+                                            Articulo/Servicio</th>
+                                        <td mat-cell *matCellDef="let element" style="max-width: 20px; overflow: auto;">
+                                            {{element.nombre.toUpperCase()}} | {{element.marca ?
+                                            element.marca.toUpperCase() : '--'}}
+                                        </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="quantity">
+                                        <th mat-header-cell *matHeaderCellDef class="text-header-table tac">Cantidad
+                                        </th>
+                                        <td mat-cell *matCellDef="let element">{{element.cantidadVendida}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="amount">
+                                        <th mat-header-cell *matHeaderCellDef class="text-header-table tac">Precio</th>
+                                        <td mat-cell *matCellDef="let element"> {{(element.cantidadVendida *
+                                            element.costoPublico) | currency: 'MXN'}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="vendor">
+                                        <th mat-header-cell *matHeaderCellDef class="text-header-table tac">Vendedor
+                                        </th>
+                                        <td mat-cell *matCellDef="let element"> {{element.vendedor}} </td>
+                                    </ng-container>
+
+                                    <ng-container matColumnDef="saleDay">
+                                        <th mat-header-cell *matHeaderCellDef class="text-header-table tac">Hora</th>
+                                        <td mat-cell *matCellDef="let element"> {{element.fechaVenta.toDate() | date:
+                                            'shortTime'}} </td>
+                                    </ng-container>
+
+                                    <tr mat-header-row *matHeaderRowDef="displayedColumnsSalesList"></tr>
+                                    <tr mat-row *matRowDef="let row; columns: displayedColumnsSalesList;" [ngStyle]="{'
+                                          background-color': 
+                                          (row.idArticulo === 229 || row.idArticulo === 230 || row.idArticulo === 231 || row.idArticulo === 232 || row.idArticulo === 233 || row.idArticulo === 234 || row.idArticulo === 235 || row.idArticulo === 236 || row.idArticulo ===237 || row.idArticulo ===238 || row.idArticulo ===239 || row.idArticulo ===240 || row.idArticulo === 241 || row.idArticulo ===242) ? '#ffff0085' :
+                                          (row.categoria.toUpperCase() === 'DULCE') ? '#f39b187a' : 
+                                  '' }"></tr>
+                                </table>
+                            </div>
+                        </div>
+                        <br>
+                        <div fxLayout="row" fxLayoutAlign="end end" class="full-width" *ngIf="profile >= 99">
+                            <div fxFlex="100" fxLayout="row" fxLayoutAlign="end end">
+                                <button mat-raised-button color="accent" 
+                                    (click)="cerrarDia()"><!--[disabled]="listaVentasHoy.length === 0"-->
+                                    <mat-icon>get_app</mat-icon> Cerrar día
+                                </button>
+                            </div>
+                        </div>
+
+
+                    </div>
+
+                    <div fxFlex="20" fxflex.md="100" fxLayout="column" fxLayoutAlign="start center"
+                        class="card full-width" *ngIf="profile >= 99">
+                        <mat-accordion class="full-width" multi>
+
+                            <mat-expansion-panel expanded>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <b>EN CAJA</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="h24">{{dineroEnCaja | currency: 'MXN'}}</div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel expanded>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <b>PAPELERÍA</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="h24">{{totalPapeleria | currency: 'MXN'}}</div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel expanded>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <b>RECARGAS</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="h24">{{totalRecargas | currency: 'MXN'}}</div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel expanded>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <b>TOTAL</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="h24">{{((dineroEnCaja*1)+totalRecargas+totalPapeleria) | currency: 'MXN'}}
+                                </div>
+                            </mat-expansion-panel>
+
+                            <mat-expansion-panel expanded>
+                                <mat-expansion-panel-header>
+                                    <mat-panel-title>
+                                        <b>DULCE</b>
+                                    </mat-panel-title>
+                                </mat-expansion-panel-header>
+                                <div class="h24">{{totalDulce | currency: 'MXN'}}</div>
+                            </mat-expansion-panel>
+
+                        </mat-accordion>
+                    </div>
+                </div>
+
+            </mat-tab>
+
+        </mat-tab-group>
+        
+    </div>
+
+    <div fxFlex="20" class="full-width m-8 card-box-fondo" *ngIf="existeCaja">
+        <div class="h-75-vh">
+            <div fxLayout="row" >
+                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
+                    <div class="h12 font-bold-600">Bonificación impresiones</div>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start end">
+                <div fxFlex="25">
+                    <button (click)="registerUserReward()" mat-raised-button class="pape-button-icon" matTooltip="Agregar usuario">
+                        <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div fxLayout="row" >
+                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
+                    <div class="h12 font-bold-600">Herramientas</div>
+                </div>
+            </div>
+            <hr>
+            <div fxLayout="row" fxLayoutAlign="start end">
+                <div fxFlex="25">
+                    <button (click)="productoNoRegistrado()" mat-raised-button class="tools-button-icon" matTooltip="Agregar venta de producto no registrado">
+                        <mat-icon>playlist_add</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="25">
+                    <button (click)="infoTarjetaActas()" mat-raised-button class="tools-button-icon" matTooltip="Actas de nacimiento">
+                        <mat-icon>account_balance_wallet</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="25">
+                    <button (click)="infoTarjeta()" mat-raised-button class="tools-button-icon" matTooltip="Pago por transferencia">
+                        <mat-icon>credit_card</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="25">
+                    <button (click)="infoPlataformas()" mat-raised-button class="tools-button-icon" matTooltip="Plataformas digitales">
+                        <mat-icon>important_devices</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div fxLayout="row" fxLayoutAlign="start end" *ngIf="profile >= 99">
+                <div fxFlex="25">
+                    <button (click)="showAddStock()" mat-raised-button class="add-box" matTooltip="Agregar stock">
+                        <mat-icon>library_add</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="25">
+                    <button (click)="modificarArticulo()" mat-raised-button class="add-box" matTooltip="Modificar artículo">
+                        <mat-icon>note_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <hr>
+
+            <div fxLayout="row" >
+                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
+                    <div class="h12 font-bold-600">Principales</div>
+                </div>
+            </div>
+            <hr>
+            <div fxLayout="row" fxLayoutAlign="start end">
+                <div fxFlex="25">
+                    <button (click)="anotarImpresiones()" mat-raised-button class="principal-button-icon" matTooltip="Impresiones">
+                        <mat-icon>receipt</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="25">
+                    <button (click)="showItemList('RECARGA')" mat-raised-button class="principal-button-icon" matTooltip="Recargas">
+                        <mat-icon>contact_phone</mat-icon>
+                    </button>
+                </div>
+
+                <div fxFlex="25">
+                    <button (click)="showItemList('servicio')" mat-raised-button class="principal-button-icon" matTooltip="Servicios">
+                        <mat-icon>toll</mat-icon>
+                    </button>
+                </div>
+
+                <div fxFlex="25">
+                    <button (click)="lamina()" mat-raised-button class="principal-button-icon" matTooltip="Láminas">
+                        <mat-icon>description</mat-icon>
+                    </button>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div fxLayout="column">
+            <div fxFlex="100" class="tae p-8" fxHide fxShow.gt-sm>
+                <div class="example-button-row">
+                    <button mat-raised-button color="accent" class="full-width h-6-vh" [disabled]="carShop.length === 0" (click)="payment()"><b>COBRAR</b></button>
+                  </div>
+            </div>
+        </div>
+        
+    </div>
+
+</div>

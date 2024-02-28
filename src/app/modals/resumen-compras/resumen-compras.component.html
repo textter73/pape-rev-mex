@@ -1,0 +1,23 @@
+<div id="resumen-compras" class="full-with">
+    <div mat-dialog-content class="full-width">
+        <div class="tac">
+            <h1 mat-dialog-title>TOTAL: {{data.totalCarrito | currency: 'MXN'}}</h1>
+        </div>
+        <hr>
+        <h3 mat-dialog-title>Resúmen</h3>
+        <div *ngFor="let item of data.salesList">
+            <p>- <b>{{item.itemName}}</b> {{item.subtotal | currency: 'MXN'}}</p>
+        </div>
+        <hr>
+        <mat-form-field appearance="outline" class="full-width">
+            <mat-label>Cantidad a pagar: </mat-label>
+            <input type="number" (keyup)="onKeypressEvent()" matInput [(ngModel)]="data.cantidadRecibida">
+        </mat-form-field>
+        <h1 mat-dialog-title>CAMBIO: {{data.cantidadCambio | currency: 'MXN'}}</h1>
+    </div>
+    <hr>
+    <div mat-dialog-actions class="full-width">
+        <button mat-button (click)="onNoClick()">Cancelar</button>
+        <button mat-button [disabled]="data.cantidadCambio < 0 && data.cantidadRecibida > 0" (click)="pagar()">Abrir caja</button>
+    </div>
+</div>

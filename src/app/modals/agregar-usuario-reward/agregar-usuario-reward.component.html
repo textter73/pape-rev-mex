@@ -1,0 +1,69 @@
+<div id="registrarArticulo">
+    <h2 mat-dialog-title class="title-background p-8"><mat-icon>person</mat-icon>Registar Usuario</h2>
+    <mat-dialog-content class="mat-typography">
+  
+      <form [formGroup]="checkoutForm">
+  
+        <div fxLayout="row wrap" fxLayoutGap="10px" fxLayout.lt-sm="column" fxLayoutAlign="center center"
+          class="full-width">
+          <div fxFlex="30" fxflex.md="100" fxLayout="column" fxLayoutAlign="center center" class="full-width">
+            <div class="full-width">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Nombre</mat-label>
+                <input matInput placeholder="Nombre" formControlName="nombre">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlex="30" fxflex.md="100" fxLayout="column" fxLayoutAlign="center center" class="full-width">
+            <div class="full-width">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Apellido Paterno</mat-label>
+                <input matInput placeholder="Apellido Paterno" formControlName="apellidoPaterno">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlex="30" fxflex.md="100" fxLayout="column" fxLayoutAlign="center center" class="full-width">
+            <div class="full-width">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Apellido Materno</mat-label>
+                <input matInput placeholder="Apellido Materno" formControlName="apellidoMaterno">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+
+        <div fxLayout="row wrap" fxLayoutGap="10px" fxLayout.lt-sm="column" fxLayoutAlign="center center"
+          class="full-width">
+          <div fxFlex="45" fxflex.md="100" fxLayout="column" fxLayoutAlign="center center" class="full-width">
+            <div class="full-width">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Teléfono</mat-label>
+                <input matInput placeholder="Teléfono" formControlName="telefono">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+          <div fxFlex="45" fxflex.md="100" fxLayout="column" fxLayoutAlign="center center" class="full-width">
+            <div class="full-width">
+              <mat-form-field appearance="outline" class="full-width">
+                <mat-label>Contraseña</mat-label>
+                <input matInput type="text" placeholder="Contraseña" formControlName="password">
+                <mat-icon matSuffix>sentiment_very_satisfied</mat-icon>
+              </mat-form-field>
+            </div>
+          </div>
+        </div>
+      </form>
+    </mat-dialog-content>
+    <hr>
+    <mat-dialog-actions align="end" class="p-16" style="display: block; text-align: end; align-items: end; align-content: end;">
+      <p>
+        <button mat-raised-button color="basic" mat-dialog-close>Cancel</button>
+        <button mat-raised-button color="warn" (click)="validarDatos()" [disabled]="existe">Guardar</button>
+      </p>
+    </mat-dialog-actions>
+    
+  </div>
