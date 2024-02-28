@@ -13,15 +13,16 @@ export const environment = {
     appId: "1:993981961154:web:c877526fbbce76342bfc5b",
     measurementId: "G-0V28EM59XJ"
   }
+  
 };
 
 /**
  firebase: {
     apiKey: "AIzaSyBAWMNvLLheX1f-SWqW8Qt4BsotZXQh-kY",
-    authDomain: "sistema-lapape.firebaseapp.com",
-    databaseURL: "https://sistema-lapape-default-rtdb.firebaseio.com",
-    projectId: "sistema-lapape",
-    storageBucket: "sistema-lapape.appspot.com",
+    authDomain: "pape-rev-mex.firebaseapp.com",
+    databaseURL: "https://pape-rev-mex-default-rtdb.firebaseio.com",
+    projectId: "pape-rev-mex",
+    storageBucket: "pape-rev-mex.appspot.com",
     messagingSenderId: "577302842434",
     appId: "1:577302842434:web:c94991088e917e5abc71db",
     measurementId: "G-JY3S2MZ0X3"

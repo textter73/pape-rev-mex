@@ -20,16 +20,16 @@ describe('AppComponent', () => {
     expect(app).toBeTruthy();
   });
 
-  it(`should have as title 'sistema-lapape'`, () => {
+  it(`should have as title 'pape-rev-mex'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('sistema-lapape');
+    expect(app.title).toEqual('pape-rev-mex');
   });
 
   it('should render title', () => {
     const fixture = TestBed.createComponent(AppComponent);
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
-    expect(compiled.querySelector('.content span')?.textContent).toContain('sistema-lapape app is running!');
+    expect(compiled.querySelector('.content span')?.textContent).toContain('pape-rev-mex app is running!');
   });
 });
