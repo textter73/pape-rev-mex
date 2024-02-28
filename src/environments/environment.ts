@@ -5,15 +5,14 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: "AIzaSyDy8YE_pRDCKb7u36bfICduYgktY_E3x9c",
-    authDomain: "control-pape.firebaseapp.com",
-    projectId: "control-pape",
-    storageBucket: "control-pape.appspot.com",
-    messagingSenderId: "993981961154",
-    appId: "1:993981961154:web:c877526fbbce76342bfc5b",
-    measurementId: "G-0V28EM59XJ"
+    apiKey: "AIzaSyBovCE955lEKMgN5HCsmo8d-kO2iQfnS8E",
+    authDomain: "pape-rev-mex.firebaseapp.com",
+    projectId: "pape-rev-mex",
+    storageBucket: "pape-rev-mex.appspot.com",
+    messagingSenderId: "400545581543",
+    appId: "1:400545581543:web:b4af4e655df92892cb9542"
   }
-  
+
 };
 
 /**

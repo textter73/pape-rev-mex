@@ -1,16 +1,10 @@
 {
   "hosting": {
-    "public": "public",
+    "public": "dist/pape-rev-mex",
     "ignore": [
       "firebase.json",
       "**/.*",
       "**/node_modules/**"
-    ],
-    "rewrites": [
-      {
-        "source": "**",
-        "destination": "/index.html"
-      }
     ]
   }
 }
