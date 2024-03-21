@@ -308,15 +308,28 @@
 
     <div fxFlex="20" class="full-width m-8 card-box-fondo" *ngIf="existeCaja">
         <div class="h-75-vh">
-            <div fxLayout="row" >
+            <div fxLayout="row" *ngIf="false">
                 <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
                     <div class="h12 font-bold-600">Bonificación impresiones</div>
                 </div>
             </div>
-            <div fxLayout="row" fxLayoutAlign="start end">
+            <div fxLayout="row" fxLayoutAlign="start end" *ngIf="false">
                 <div fxFlex="25">
                     <button (click)="registerUserReward()" mat-raised-button class="pape-button-icon" matTooltip="Agregar usuario">
                         <mat-icon>person_add</mat-icon>
+                    </button>
+                </div>
+            </div>
+
+            <div fxLayout="row">
+                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
+                    <div class="h12 font-bold-600">Papelería</div>
+                </div>
+            </div>
+            <div fxLayout="row" fxLayoutAlign="start end">
+                <div fxFlex="25">
+                    <button (click)="showItemList('libreta')" mat-raised-button class="pape-button-icon" matTooltip="Libretas">
+                        <mat-icon>library_books</mat-icon>
                     </button>
                 </div>
             </div>

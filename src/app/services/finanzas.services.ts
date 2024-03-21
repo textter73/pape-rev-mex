@@ -14,6 +14,10 @@ export class FinanzasServices {
         return this.firestore.collection(`finanzas/`).snapshotChanges();
     }
 
+    getFinanzasV2() {
+        return this.firestore.collection(`finanzas/`).valueChanges();
+    }
+
     guardaFinanzas(id: any, data: any) {
         return this.firestore.collection('finanzas/').doc(id).set(data);
     }
