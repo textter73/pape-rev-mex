@@ -21,7 +21,7 @@ import { AgregarArticuloComponent } from '../modals/agregar-articulo/agregar-art
 export class AdministradorArticulosComponent implements OnInit {
   @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
 
-  displayedColumns: string[] = ['np','imagen', 'clave', 'nombre', 'marca', 'costo', 'costoPublico', 'caja','cantidad', 'modificacion', 'usuario', 'activo', 'accion',];
+  displayedColumns: string[] = ['np','imagen', 'nombre', 'marca','categoria', 'costo', 'costoPublico','cantidad','comprarDespues', 'modificacion', 'usuario', 'activo', 'accion',];
   dataSource: any = null;
 
   itemsListCatalog: any = [];
@@ -41,6 +41,8 @@ export class AdministradorArticulosComponent implements OnInit {
   principalList: any = [];
   userData = '';
   perfil = 0;
+  selectedValue: number = 100000;
+  selectedActivo: boolean = true;
 
   getLocalStorage(): void {
     this.usernName = `${localStorage.getItem("nombre")} ${localStorage.getItem("apllPtrn")} ${localStorage.getItem("apllMtrn")}`;
@@ -99,11 +101,13 @@ export class AdministradorArticulosComponent implements OnInit {
         listItems.forEach((item) => {
           this.itemsList.push(item);
         });
-        console.log(this.itemsList);
+    
         this.dataSource = new MatTableDataSource<any>(this.itemsList);
         setTimeout( () => {
           this.dataSource.paginator = this.paginator;
         });
+
+        this.filterData();
         Swal.close();
       });
     }
@@ -203,6 +207,15 @@ export class AdministradorArticulosComponent implements OnInit {
             case 'cantidad': 
               element.cantidad = result.value
               break;
+            case 'categoria': 
+              element.categoria = result.value
+              break;
+            case 'comprar despues': 
+              element.comprarDespues = result.value === 'si';
+              break;
+            case 'para comprar': 
+              element.comprarDespues = !(result.value === 'si');
+              break;
             default:
               break;
           }
@@ -229,7 +242,9 @@ export class AdministradorArticulosComponent implements OnInit {
             categoría: element.categoria,
             codigo: element.codigo,
             id: element.id,
-            marca: element.marca
+            marca: element.marca,
+            comprarDespues: element.comprarDespues,
+            categoria: element.categoria
           };
 
           let id = element.id;
@@ -291,6 +306,38 @@ export class AdministradorArticulosComponent implements OnInit {
           items: this.itemsList
         }
       });
+    }
+
+    selectActivo(value: any) {
+      this.selectedActivo = value === 1;
+      this.filterData();
+    }
+
+    selectStock(value: any) {
+      this.selectedValue = value;
+      this.filterData();
+    }
+
+    filterData(): any {
+      let auxActivo = [];
+      for (const item of this.itemsList) {
+        if (item.activo) {
+          auxActivo.push(item);
+        }
+      }
+
+      let aux = [];
+      for (const item of auxActivo) {
+        if (Number(item.cantidad) <= Number(this.selectedValue)) {
+          aux.push(item);
+        }
+      }
+
+      this.dataSource = new MatTableDataSource<any>(aux);
+      setTimeout( () => {
+        this.dataSource.paginator = this.paginator;
+      });
+
     }
 
 }

@@ -41,7 +41,7 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
     isLoading = true;
     fechaActual: String = '';
     infoPreview: any = {};
-    displayedColumnsSalesList: string[] = ['number', 'items', 'quantity', 'amount', 'vendor' ,'saleDay'];
+    displayedColumnsSalesList: string[] = ['number', 'items', 'quantity', 'amount', 'vendor' ,'saleDay', 'actions'];
 
 
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -663,7 +663,8 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
                     saleAmount: 1,
                     quantity: +cantidad,
                     subtotal: +cantidad,
-                    marca: ''
+                    marca: '',
+                    imagen: 'https://openclipart.org/image/800px/339926'
                 },
             );
         }
@@ -686,10 +687,18 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
             }
         }
 
+        
+        let temporalListOrder = temporalList.sort(function(a: any, b: any){
+            if(a.branch.toUpperCase()+'' < b.branch.toUpperCase()+'') { return -1; }
+            if(a.branch.toUpperCase()+'' > b.branch.toUpperCase()+'') { return 1; }
+            return 0;
+        })
+        
+
         const dialogRef = this.dialog.open(SeleccionarArticuloComponent, {
             width: '600px',
             data: {
-                candyList: temporalList,
+                candyList: temporalListOrder,
                 title: term
             },
         });
@@ -804,14 +813,16 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
                         activo: true,
                         categoria: element.category,
                         marca: element.marca,
-                        withoutRegistration: element.withoutRegistration === true
+                        withoutRegistration: element.withoutRegistration === true,
+                        imagen: element.imagen
                     };
 
                     await this._ventasServices.creaVentasHoy(this.fechaActual, data, ((indexAuto).toString()))
                         .then(async () => {
                             let data = {
                                 cantidad: (+element.quantityAvailable - +element.quantity),
-                                fechaModificacion: alta
+                                fechaModificacion: alta,
+                                comprarDespues: !((+element.quantityAvailable - +element.quantity) <= 3)
                             };
 
                             let id = element.id;
@@ -974,6 +985,15 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
             },
         });
 
+    }
+
+    pagoTransferencia(value: any, element: any) {
+        let data = {
+            pagoTransferencia: value
+        };
+        console.log(data);
+        console.log(value);
+        console.log(element);
     }
 
 }

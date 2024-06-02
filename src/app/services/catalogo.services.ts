@@ -61,4 +61,8 @@ export class CatalogoServices {
   getCatalogHistorialV2(id: any) {
     return this.firestore.collection(`articulos/${id}/historial`).valueChanges();
   }
+
+  actualizarTipoPago(id: any, data: any, fecha: any) {
+    return this.firestore.collection(`finanzas/${fecha}`).doc(id).update(data);
+  }
 }

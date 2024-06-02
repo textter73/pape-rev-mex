@@ -96,11 +96,12 @@ export class AgregarStockComponent implements OnInit {
             imagen: this.element.imagen ? this.element.imagen : '',
             nombre: this.element.nombre,
             usuarioCrea: 'aortiz',
-            activo: 1,
+            activo: true,
             categoría: this.element.categoria,
             codigo: this.element.codigo,
             id: this.element.id,
-            marca: this.element.marca
+            marca: this.element.marca,
+            comprarDespues: !((+this.element.quantityAvailable - +this.element.quantity) <= 3)
         };
 
         let id = this.element.id;
