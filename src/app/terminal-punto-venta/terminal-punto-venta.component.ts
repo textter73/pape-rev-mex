@@ -655,7 +655,7 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
         if (cantidad > 0) {
             this.carShop.push(
                 {
-                    id: 255,
+                    id: 11,
                     itemName: 'Impresiones',
                     branch: 'impresiones',
                     quantityAvailable: 1000,
