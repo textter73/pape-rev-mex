@@ -952,7 +952,8 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
                         quantity: +result.cantidad,
                         subtotal: (+result.cantidad * +result.costoPublico),
                         marca: result.marca,
-                        withoutRegistration: true
+                        withoutRegistration: true,
+                        result: result.imagen ? result.imagen : ''
                     }
                 );
             }
