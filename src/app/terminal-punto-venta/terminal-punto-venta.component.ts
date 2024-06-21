@@ -41,7 +41,7 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
     isLoading = true;
     fechaActual: String = '';
     infoPreview: any = {};
-    displayedColumnsSalesList: string[] = ['number', 'items', 'quantity', 'amount', 'vendor' ,'saleDay', 'actions'];
+    displayedColumnsSalesList: string[] = ['number', 'image', 'items', 'quantity', 'amount', 'vendor', 'saleDay'];
 
 
     @ViewChild(MatPaginator, { static: true }) paginator!: MatPaginator;
@@ -953,7 +953,7 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
                         subtotal: (+result.cantidad * +result.costoPublico),
                         marca: result.marca,
                         withoutRegistration: true,
-                        result: result.imagen ? result.imagen : ''
+                        imagen: result.imagen ? result.imagen : ''
                     }
                 );
             }
@@ -995,6 +995,10 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
         console.log(data);
         console.log(value);
         console.log(element);
+    }
+
+    onImgError(event: any){
+        event.target.src = './assets/img/logo.jpg';
     }
 
 }
