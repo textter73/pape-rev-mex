@@ -3518,8 +3518,7 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
         const mesActual = fecha.getMonth() + 1;
         const formatHoy = hoy < 10 ? '0' + hoy : hoy;
 
-        //this.fechaActual = formatHoy + '' + mesActual + '' + añoActual;
-        this.fechaActual = '1892024';
+        this.fechaActual = formatHoy + '' + mesActual + '' + añoActual;
     }
 
     ngAfterViewInit() {
