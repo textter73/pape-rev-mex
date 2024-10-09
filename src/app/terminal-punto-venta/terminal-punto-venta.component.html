@@ -303,30 +303,94 @@
 
             </mat-tab>
 
+            <mat-tab *ngIf="profile >= 99">
+
+                <ng-template mat-tab-label>
+                    <mat-icon class="example-tab-icon">account_balance</mat-icon>
+                    Resúmen Ventas
+                </ng-template>
+
+                <div fxLayout="row">
+                    <div fxFlex="100">
+                        <mat-accordion class="full-width" multi *ngIf="profile >= 99">
+                            <div fxLayout="row">
+                                <div fxFlex="25" class="tae p-4" fxHide fxShow.gt-sm>
+                                    <mat-expansion-panel expanded>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <b>EN CAJA</b>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="h24">{{dineroEnCaja | currency: 'MXN'}}</div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </div>
+            
+                            <div fxLayout="row">
+                                <div fxFlex="25" class="tae p-4" fxHide fxShow.gt-sm>
+                                    <mat-expansion-panel expanded>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <b>PAPELERÍA</b>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="h24">{{totalPapeleria | currency: 'MXN'}}</div>
+                                    </mat-expansion-panel>
+                                </div>
+                                <div fxFlex="25" class="tae p-4" fxHide fxShow.gt-sm>
+                                    <mat-expansion-panel expanded>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <b>RECARGAS</b>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="h24">{{totalRecargas | currency: 'MXN'}}</div>
+                                    </mat-expansion-panel>
+                                </div>
+                
+                                <div fxFlex="25" class="tae p-4" fxHide fxShow.gt-sm>
+                                    <mat-expansion-panel expanded>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <b>TOTAL</b>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="h24">{{((dineroEnCaja*1)+totalRecargas+totalPapeleria) | currency: 'MXN'}}
+                                        </div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </div>
+            
+                            <div fxLayout="row">
+                                <div fxFlex="25" class="tae p-4" fxHide fxShow.gt-sm>
+                                    <mat-expansion-panel expanded>
+                                        <mat-expansion-panel-header>
+                                            <mat-panel-title>
+                                                <b>DULCE</b>
+                                            </mat-panel-title>
+                                        </mat-expansion-panel-header>
+                                        <div class="h24">{{totalDulce | currency: 'MXN'}}</div>
+                                    </mat-expansion-panel>
+                                </div>
+                            </div>
+                        </mat-accordion>
+                    </div>
+                </div>
+
+            </mat-tab>
         </mat-tab-group>
         
     </div>
 
     <div fxFlex="33" class="full-width m-8 card-box-fondo" *ngIf="existeCaja">
         <div class="h-75-vh">
-            <div fxLayout="row" *ngIf="false">
-                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
-                    <div class="h12 font-bold-600">Bonificación impresiones</div>
-                </div>
-            </div>
-            <div fxLayout="row" fxLayoutAlign="start end" *ngIf="false">
-                <div fxFlex="25">
-                    <button (click)="registerUserReward()" mat-raised-button class="pape-button-icon" matTooltip="Agregar usuario">
-                        <mat-icon>person_add</mat-icon>
-                    </button>
-                </div>
-            </div>
-
+            <hr>
             <div fxLayout="row">
                 <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
                     <div class="h12 font-bold-600">Básicos</div>
                 </div>
             </div>
+            <hr>
             <div fxLayout="row" fxLayoutAlign="start end">
                 <div fxFlex="16">
                     <button (click)="showItemList('libreta')" mat-raised-button class="pape-button-icon" matTooltip="Libretas">
@@ -356,6 +420,31 @@
                 <div fxFlex="16">
                     <button (click)="showItemList('gomas')" mat-raised-button class="pape-button-icon" matTooltip="Gomas">
                         <mat-icon>delete_outline</mat-icon>
+                    </button>
+                </div>
+            </div>
+            <hr>
+            <div fxLayout="row">
+                <div fxFlex="100" fxHide fxShow.gt-sm fxLayoutAlign="start end">
+                    <div class="h12 font-bold-600">Acceso directo</div>
+                </div>
+            </div>
+            <hr>
+            <div fxLayout="row" fxLayoutAlign="start end">
+                <div fxFlex="16">
+                    <button (click)="productSelected(hoja)" mat-raised-button class="pape-button-icon" matTooltip="Hoja de color">
+                        <mat-icon>format_color_fill</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="16">
+                    <button (click)="productSelected(mapas)" mat-raised-button class="pape-button-icon" matTooltip="Mapa">
+                        <mat-icon>terrain</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="16">
+                    <button mat-raised-button class="pape-button-icon" matTooltip="Lamina"
+                        (click)="productSelected(laminasDefault)">
+                        <mat-icon>note</mat-icon>
                     </button>
                 </div>
             </div>
@@ -410,26 +499,31 @@
             </div>
             <hr>
             <div fxLayout="row" fxLayoutAlign="start end">
-                <div fxFlex="25">
+                <div fxFlex="20">
                     <button (click)="anotarImpresiones()" mat-raised-button class="principal-button-icon" matTooltip="Impresiones">
                         <mat-icon>receipt</mat-icon>
                     </button>
                 </div>
-                <div fxFlex="25">
+                <div fxFlex="20">
                     <button (click)="showItemList('RECARGA')" mat-raised-button class="principal-button-icon" matTooltip="Recargas">
                         <mat-icon>contact_phone</mat-icon>
                     </button>
                 </div>
 
-                <div fxFlex="25">
+                <div fxFlex="20">
                     <button (click)="showItemList('servicio')" mat-raised-button class="principal-button-icon" matTooltip="Servicios">
                         <mat-icon>toll</mat-icon>
                     </button>
                 </div>
 
-                <div fxFlex="25">
+                <div fxFlex="20">
                     <button (click)="lamina()" mat-raised-button class="principal-button-icon" matTooltip="Láminas">
                         <mat-icon>description</mat-icon>
+                    </button>
+                </div>
+                <div fxFlex="20">
+                    <button (click)="registerUserReward()" mat-raised-button class="pape-button-icon" matTooltip="Programa de recompensas">
+                        <mat-icon>stars</mat-icon>
                     </button>
                 </div>
             </div>
@@ -442,69 +536,6 @@
                   </div>
             </div>
         </div>
-
-            <mat-accordion class="full-width" multi *ngIf="profile >= 99">
-                <div fxLayout="row">
-                    <div fxFlex="50" class="tae p-4" fxHide fxShow.gt-sm>
-                        <mat-expansion-panel expanded>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <b>EN CAJA</b>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="h24">{{dineroEnCaja | currency: 'MXN'}}</div>
-                        </mat-expansion-panel>
-                    </div>
-                    <div fxFlex="50" class="tae p-4" fxHide fxShow.gt-sm>
-                        <mat-expansion-panel expanded>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <b>PAPELERÍA</b>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="h24">{{totalPapeleria | currency: 'MXN'}}</div>
-                        </mat-expansion-panel>
-                    </div>
-                </div>
-
-                <div fxLayout="row">
-                    <div fxFlex="50" class="tae p-4" fxHide fxShow.gt-sm>
-                        <mat-expansion-panel expanded>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <b>RECARGAS</b>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="h24">{{totalRecargas | currency: 'MXN'}}</div>
-                        </mat-expansion-panel>
-                    </div>
-    
-                    <div fxFlex="50" class="tae p-4" fxHide fxShow.gt-sm>
-                        <mat-expansion-panel expanded>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <b>TOTAL</b>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="h24">{{((dineroEnCaja*1)+totalRecargas+totalPapeleria) | currency: 'MXN'}}
-                            </div>
-                        </mat-expansion-panel>
-                    </div>
-                </div>
-
-                <div fxLayout="row">
-                    <div fxFlex="50" class="tae p-4" fxHide fxShow.gt-sm>
-                        <mat-expansion-panel expanded>
-                            <mat-expansion-panel-header>
-                                <mat-panel-title>
-                                    <b>DULCE</b>
-                                </mat-panel-title>
-                            </mat-expansion-panel-header>
-                            <div class="h24">{{totalDulce | currency: 'MXN'}}</div>
-                        </mat-expansion-panel>
-                    </div>
-                </div>
-            </mat-accordion>
     </div>
 
 </div>
