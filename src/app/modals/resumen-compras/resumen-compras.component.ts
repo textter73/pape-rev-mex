@@ -15,7 +15,9 @@ export class ResumenComprasComponent  implements OnInit {
   ) {}
 
   ngOnInit() {
+    console.log(this.data);
     this.data.cantidadRecibida = '';
+    this.data.cantidadCambio = 0;
   }
 
   onNoClick(): void {

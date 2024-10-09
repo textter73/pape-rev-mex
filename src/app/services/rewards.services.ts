@@ -18,4 +18,16 @@ export class RewardsServices {
     return this.firestore.collection(`userRewards/`).doc(number).valueChanges();
   }
 
+  getUsers() {
+    return this.firestore.collection(`userRewards/`).valueChanges();
+  }
+
+  creaMovimiento(number: any, id: any, data: any) {
+    return this.firestore.collection(`userRewards/`).doc(number).collection('movimientos/').doc(id).set(data);
+  }
+
+  getMovimientos(number: any,) {
+    return this.firestore.collection(`userRewards/`).doc(number).collection('movimientos/').valueChanges();
+  }
+
 }

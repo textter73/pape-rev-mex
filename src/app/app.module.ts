@@ -64,6 +64,7 @@ import {MatStepperModule} from '@angular/material/stepper';
 import { CerrarCajaComponent } from './modals/cerrar-caja/cerrar-caja.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AgregarUsuarioRewardComponent } from './modals/agregar-usuario-reward/agregar-usuario-reward.component';
+import {MatListModule} from '@angular/material/list';
 registerLocaleData(locales, 'es-MX')
 
 @NgModule({
@@ -139,8 +140,8 @@ registerLocaleData(locales, 'es-MX')
       MatTabsModule,
       MatBadgeModule,
       MatSlideToggleModule,
-      MatProgressSpinnerModule
-
+      MatProgressSpinnerModule,
+      MatListModule
     ],
   bootstrap: [
     AppComponent,
