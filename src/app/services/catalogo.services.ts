@@ -35,6 +35,8 @@ export class CatalogoServices {
   }
 
   actualizaArticulo(id: any, data: any) {
+    console.log(id);
+    console.log(data);
     return this.firestore.collection('articulos/').doc(id).update(data);
   }
 
