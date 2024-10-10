@@ -30744,7 +30744,7 @@ export class TerminalPuntoVentaComponent implements OnInit, AfterViewInit {
             usuarioCrea: item.usuarioCrea
             };
             
-                await this._catalogoServices.actualizaArticulo(item.id + '', data)
+                await this._catalogoServices.guardaArticulo(item.id + '', data)
             .then((res) => {
                 console.log('item');
                 console.log(res)
